@@ -23,7 +23,6 @@ class ItemProvider with ChangeNotifier {
       List<Item> datas = [];
       // print(addItems.toString());
       for (var dataJson in addItems['items']) {
-        // print(dataJson);
         DbHelper.iteminsert('items', {
           'itemName': dataJson['itemName'],
           'itemImage': dataJson['itemImage'],
@@ -33,7 +32,6 @@ class ItemProvider with ChangeNotifier {
       }
 
       _Items = datas;
-
       notifyListeners();
     } catch (err) {
       print(err);
@@ -49,6 +47,8 @@ class ItemProvider with ChangeNotifier {
             itemName: item['itemName'],
             itemDetails: item['itemDetails']))
         .toList();
+    print(_Items);
+    print("Data");
     notifyListeners();
   }
 }

@@ -8,6 +8,7 @@ import 'package:machine_test/provider/Item_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/item_list.dart';
+import 'local_db.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/HomePage';
@@ -26,13 +27,13 @@ class _HomePageState extends State<HomePage> {
     connection = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
+      print(result.toString());
       if (result == ConnectivityResult.none) {
         setState(() {
           isoffline = true;
         });
-
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("You are Offline")));
+            .showSnackBar(const SnackBar(content: Text('You are Offline')));
       }
     });
     super.initState();
@@ -55,6 +56,16 @@ class _HomePageState extends State<HomePage> {
                 bottomLeft: Radius.circular(10.0),
                 bottomRight: Radius.circular(10.0)),
           ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, LocalItemList.routeName);
+                },
+                child: const Text(
+                  'Local-DB',
+                  style: TextStyle(color: Colors.white),
+                ))
+          ],
         ),
         body: FutureBuilder(
           future: (isoffline)

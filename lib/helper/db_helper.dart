@@ -10,13 +10,14 @@ class DbHelper {
     return sql.openDatabase(path.join(dbPath, 'items.db'),
         onCreate: (db, version) {
       return db.execute(
-          'CREATE TABLE items(itemName TEXT,itemImage TEXT,itemDetails TEXT)');
+          'CREATE TABLE items(itemName TEXT PRIMARY KEY,itemImage TEXT,itemDetails TEXT)');
     }, version: 1);
   }
 
   static Future<void> iteminsert(String table, Map<String, Object> data) async {
     final db = await DbHelper.database();
-    db.insert(table, data);
+    db.insert(table, data,conflictAlgorithm: ConflictAlgorithm.replace);
+    
   }
 
   static Future<List<Map<String, dynamic>>> getData(String table) async {

@@ -5,6 +5,7 @@ import 'package:machine_test/provider/Item_provider.dart';
 import 'package:provider/provider.dart';
 import '../screens/home_page.dart';
 
+import 'screens/local_db.dart';
 import 'screens/login_page.dart';
 
 void main() {
@@ -27,17 +28,20 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
         ),
         home: const LoginPage(),
-        routes: {HomePage.routeName: (context) => const HomePage()},
+        routes: {
+          HomePage.routeName: (context) => const HomePage(),
+          LocalItemList.routeName: (context) => const LocalItemList(),
+        },
       ),
     );
   }
 }
 
-
- class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
