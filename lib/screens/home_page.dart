@@ -19,32 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  StreamSubscription? connection;
-  bool isoffline = false;
-
-  @override
-  void initState() {
-    connection = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      print(result.toString());
-      if (result == ConnectivityResult.none) {
-        setState(() {
-          isoffline = true;
-        });
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('You are Offline')));
-      }
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    connection!.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,10 +42,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: FutureBuilder(
-          future: (isoffline)
-              ? Provider.of<ItemProvider>(context, listen: false)
-                  .fetchOfflineData()
-              : Provider.of<ItemProvider>(context, listen: false).itemFetch(),
+          future: Provider.of<ItemProvider>(context, listen: false).itemFetch(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(

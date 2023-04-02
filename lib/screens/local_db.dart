@@ -27,7 +27,7 @@ class _LocalItemListState extends State<LocalItemList> {
   @override
   Widget build(BuildContext context) {
     final items = Provider.of<ItemProvider>(context).Items;
-    print(items.length.toString());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Local DB Item List"),
